@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="fragments/base :: headerfiles(#{admin.musei.titolo})"></head>
+
+    <body th:replace="fragments/base :: body(~{::main})">
+
+        <main class="container-fluid px-lg-5 py-3 bg-light">
+            <!-- Tabella Elenco Musei -->
+            <section class="container px-lg-5">
+                <div class="d-flex mb-2">
+                    <h2 th:text="#{admin.musei.titolo}"></h2>
+                    <div class="ms-auto">
+                        <a class="btn btn-dark" th:href="@{/admin/musei/new}">
+                            <i class="fa-solid fa-plus"></i>
+                            <span th:text="#{admin.musei.aggiungi}"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <table class="table table-striped table-sm text-center">
+                    <thead>
+                        <tr class="table-dark">
+                            <th scope="col" th:text="#{admin.musei.nome}"></th>
+                            <th scope="col" th:text="#{admin.musei.data}"></th>
+                            <th scope="col" th:text="#{admin.musei.luogo}"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="museo : ${musei}" class="align-middle">
+                            <td th:text="${museo.nome}"></td>
+                            <td>
+                                <span th:text="${#temporals.format(museo.data, 'dd/MM/yyyy') + ', '}"></span>
+                                <span th:text="${#temporals.format(museo.orario, 'HH:mm')}"></span>
+                            </td>
+                            <td th:text="${museo.luogo.nome}"></td>
+                            <td>
+                                <a class="btn btn-dark" th:href="@{'/musei/' + ${museo.id}}">
+                                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                                    <span th:text="#{admin.musei.gestione}"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+
+    </body>
+
+</html>
